@@ -41,3 +41,7 @@ htmlcov/
 # MyPy / Pylint / Ruff
 .mypy_cache/
 .dmy
+
+# SQLite DB files
+*.sqlite3
+*.db
