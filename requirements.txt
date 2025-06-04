@@ -1,2 +1,5 @@
 openai>=1.0.0
 mcp-use>=0.1.0
+fastapi
+uvicorn
+pydantic

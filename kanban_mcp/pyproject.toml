@@ -1,0 +1,22 @@
+[project]
+name = "kanban-mcp"
+version = "0.1.0"
+description = "Model Context Protocol server for a simple Kanban board"
+authors = [{name = "John Doe"}]
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
+    "pydantic>=2.0.0"
+]
+requires-python = ">=3.8"
+
+[project.scripts]
+kanban-serve = "kanban.setup:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["kanban"]
