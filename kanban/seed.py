@@ -1,4 +1,4 @@
-from kanban.db import get_db_connection, init_db
+from db import get_db_connection, init_db
 
 def seed_db():
     init_db()

@@ -1,6 +1,5 @@
-from fastapi import HTTPException
-from kanban.db import get_db_connection
-from kanban.models import Ticket
+from db import get_db_connection
+from models import Ticket
 
 def fetch_ticket_details(ticket_id: int):
     conn = get_db_connection()

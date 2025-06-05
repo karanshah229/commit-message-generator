@@ -12,13 +12,13 @@ A simple **Model Context Protocol** server for a Kanban board, built with FastAP
 
 ## 📦 Requirements
 
--   Python 3.8+
+-   Python 3.10+
 -   pip
 
-## 🚀 Quick Start
-
-### 1. Install the project
+## 🚀 Start project
 
 ```bash
-pip install -e .
+source .venv/bin/activate
+uv sync --all-groups
+uv run main.py
 ```
