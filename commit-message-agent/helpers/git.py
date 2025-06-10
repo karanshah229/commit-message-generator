@@ -10,7 +10,7 @@ def is_file_ignore_by_git(filename: str) -> bool:
 
 def get_full_diff() -> str:
     try:
-        return subprocess.check_output(["git", "diff", "../IGNORE_THIS_FOLDER/"], text=True).strip()
+        return subprocess.check_output(["git", "diff", "../log_analyzer_project/"], text=True).strip()
     
     except subprocess.CalledProcessError as e:
         return f"Error getting full diff: {e}"

@@ -11,3 +11,6 @@ log-analyzer = "log_analyzer.main:main"
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["log_analyzer"]

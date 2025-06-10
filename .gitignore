@@ -45,3 +45,5 @@ htmlcov/
 # SQLite DB files
 *.sqlite3
 *.db
+
+log_analyzer_project/exports/
