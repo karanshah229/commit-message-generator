@@ -1,0 +1,13 @@
+[project]
+name = "commit-message-judge"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "mcp-use",
+  "langchain_openai",
+  "portkey_ai",
+  "typing",
+  "python-dotenv"
+]

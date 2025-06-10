@@ -1,18 +1,37 @@
-import os
 import asyncio
+import subprocess
+import os
 
-from dotenv import load_dotenv
-
-import commit_message_agent
 from helpers.llm import get_mcp_client
 from helpers.git import get_branch_name, get_full_diff, get_recent_commits
 
-load_dotenv(".env.local")
-PORTKEY_API_KEY = os.getenv("PORTKEY_API_KEY")
-VIRTUAL_KEY = os.getenv("PORTKEY_VIRTUAL_KEY")
+async def get_suggested_commit_message():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    agent_dir = os.path.join(os.path.dirname(current_dir), 'commit-message-agent')
+    script_path = os.path.join(agent_dir, 'commit_message_agent.py')
+    
+    result = subprocess.run(['python', script_path], 
+                          capture_output=True, 
+                          text=True)
+    
+    if result.returncode != 0:
+        raise Exception(f"Error running commit message agent: {result.stderr}")
+    
+    return result.stdout.strip()
 
-async def get_commit_message():
-    return await commit_message_agent.main()
+async def seed_db():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    agent_dir = os.path.join(os.path.dirname(current_dir), 'kanban')
+    script_path = os.path.join(agent_dir, 'seed.py')
+    
+    result = subprocess.run(['python', script_path], 
+                          capture_output=True, 
+                          text=True)
+    
+    if result.returncode != 0:
+        raise Exception(f"Error seeding db: {result.stderr}")
+    
+    return result.stdout.strip()
 
 def get_judging_prompt(commit_message="", diff="", branch="", commits=[]):
     prompt = f"""
@@ -121,7 +140,10 @@ async def judge_commit_message(prompt, mcp_agent):
 
 async def main():
     mcp_agent = get_mcp_client()
-    commit_message = await get_commit_message()
+
+    await seed_db()
+    commit_message = await get_suggested_commit_message()
+    print("\nSuggested Commit Message:")
     print(commit_message)
     
     diff = get_full_diff()
