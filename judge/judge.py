@@ -162,11 +162,14 @@ async def run_test_cases(branch_name):
     return ruling
 
 async def main(test_cases):
-    results = []
+    results = {}
     for branch_name in test_cases:
         raw_output = await run_test_cases(branch_name)
         test_case = json.loads(raw_output)
-        results.append(test_case.get('pass', {}))
+        results[branch_name] = {
+            'pass': test_case.get('pass', False),
+            'improvements': test_case.get('improvements', {})
+        }
     
     return results
 
@@ -180,4 +183,4 @@ if __name__ == "__main__":
 
     ruling = asyncio.run(main(test_cases))
     print("\nJudge ruling:")
-    print(ruling)
+    print(json.dumps(ruling, indent=2))
