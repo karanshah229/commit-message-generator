@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 LOG_PATTERN = re.compile(
-    r'(?P<ip>\S+) - - \[(?P<timestamp>[^\]]+)\] "(?P<method>\S+) (?P<endpoint>\S+) HTTP/1.1" (?P<status>\d{3}) (?P<size>\d+)'
+    r'(?P<ip>\S+) - - \[(?P<timestamp>[^\]]+)\] "(?P<method>\S+) (?P<endpoint>\S+) \S+" (?P<status>\d{3}) (?P<size>\d+)'
 )
 
 def parse_line(line):
@@ -10,10 +10,9 @@ def parse_line(line):
     if not match:
         return None
     data = match.groupdict()
-    try:
-        data["timestamp"] = datetime.strptime(data["timestamp"], "%d/%b/%Y:%H:%M:%S %z")
-    except ValueError:
-        data["timestamp"] = None
+    data["timestamp"] = datetime.strptime(data["timestamp"], "%d/%b/%Y:%H:%M:%S %z")
+
+
     return data
 
 def read_log_file(filepath):
