@@ -1,9 +1,10 @@
 import asyncio
 import subprocess
 import os
+import json
 
 from helpers.llm import get_mcp_client
-from helpers.git import create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, stage_all_files, switch_branch, unstage_all_files
+from helpers.git import get_latest_commit_message, stage_and_create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, switch_branch, unstage_all_files
 
 async def get_suggested_commit_message():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -128,9 +129,6 @@ Also output the thinking steps very clearly
 [End of Output]
 """
 
-    # print("\nJudging prompt:")
-    # print(prompt)
-
     return prompt
 
 async def judge_commit_message(prompt, mcp_agent):
@@ -143,6 +141,7 @@ async def run_test_cases(branch_name):
     mcp_agent = get_mcp_client()
 
     switch_branch(branch_name)
+    original_commit_message  = get_latest_commit_message()
     reset_head_by_commits(1)
     unstage_all_files()
     
@@ -157,17 +156,28 @@ async def run_test_cases(branch_name):
     prompt = get_judging_prompt(commit_message, diff, branch, commits)
     ruling = await judge_commit_message(prompt, mcp_agent)
 
-    # stage_all_files()
-    create_commit(commit_message)
-    
+    stage_and_create_commit(original_commit_message)
     switch_branch('main')
 
     return ruling
 
-async def main():
-    await run_test_cases('feat/log-analyzer-1')
+async def main(test_cases):
+    results = []
+    for branch_name in test_cases:
+        raw_output = await run_test_cases(branch_name)
+        test_case = json.loads(raw_output)
+        results.append(test_case.get('pass', {}))
+    
+    return results
 
 if __name__ == "__main__":
-    ruling = asyncio.run(main())
+    test_cases = [
+        'feat/log-analyzer-1',
+        'feat/log-analyzer-2',
+        'fix/log-analyzer-3',
+        'feat/log-analyzer-4'
+    ]
+
+    ruling = asyncio.run(main(test_cases))
     print("\nJudge ruling:")
     print(ruling)

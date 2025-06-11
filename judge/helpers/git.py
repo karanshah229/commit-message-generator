@@ -52,24 +52,17 @@ def unstage_all_files() -> bool:
         print(f"Error unstaging all files: {e}")
         return False
 
-def stage_all_files() -> bool:
-    try:
-        subprocess.check_output(["git", "add", "."], text=True)
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error staging all files: {e}")
-        return False
-
-def create_commit(message: str) -> bool:
+def stage_and_create_commit(message: str) -> bool:
     try:
         status = subprocess.check_output(["git", "status", "--porcelain"], text=True)
         if not status.strip():
             print("No changes to commit")
             return False
             
+        subprocess.check_output(["git", "add", "-A"], text=True)
         # Use -F- to read commit message from stdin
         process = subprocess.Popen(
-            ["git", "commit", "-a", "-F-"],
+            ["git", "commit", "-F-"],
             stdin=subprocess.PIPE,
             text=True
         )
@@ -83,3 +76,15 @@ def create_commit(message: str) -> bool:
     except subprocess.CalledProcessError as e:
         print(f"Error creating commit: {e}")
         return False
+
+def get_latest_commit_message() -> str:
+    try:
+        # Get the full commit message including body
+        message = subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%B"],
+            text=True
+        ).strip()
+        return message
+    except subprocess.CalledProcessError as e:
+        print(f"Error getting latest commit message: {e}")
+        return ""
