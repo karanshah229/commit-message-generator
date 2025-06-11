@@ -69,7 +69,7 @@ def create_commit(message: str) -> bool:
             
         # Use -F- to read commit message from stdin
         process = subprocess.Popen(
-            ["git", "commit", "-F-"],
+            ["git", "commit", "-a", "-F-"],
             stdin=subprocess.PIPE,
             text=True
         )

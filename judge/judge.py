@@ -157,7 +157,7 @@ async def run_test_cases(branch_name):
     prompt = get_judging_prompt(commit_message, diff, branch, commits)
     ruling = await judge_commit_message(prompt, mcp_agent)
 
-    stage_all_files()
+    # stage_all_files()
     create_commit(commit_message)
     
     switch_branch('main')
