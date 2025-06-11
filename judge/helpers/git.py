@@ -67,8 +67,19 @@ def create_commit(message: str) -> bool:
             print("No changes to commit")
             return False
             
-        subprocess.check_output(["git", "commit", "-m", message], text=True)
-        return True
+        # Use -F- to read commit message from stdin
+        process = subprocess.Popen(
+            ["git", "commit", "-F-"],
+            stdin=subprocess.PIPE,
+            text=True
+        )
+        process.communicate(input=message)
+        
+        if process.returncode == 0:
+            return True
+        else:
+            print(f"Error creating commit: Command failed with return code {process.returncode}")
+            return False
     except subprocess.CalledProcessError as e:
         print(f"Error creating commit: {e}")
         return False
