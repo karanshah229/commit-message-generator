@@ -9,6 +9,7 @@ Useful for quickly extracting insights like the most requested endpoints, status
 
 -   Parse standard Apache access log files
 -   Count most requested endpoints
+-   Analyze status code distribution (2xx, 3xx, 4xx, 5xx)
 -   Easily extensible as a Python module
 
 ---
@@ -43,10 +44,15 @@ Example
 #### Sample Output
 
 ```
-Most Requested Endpoints:
+Top 10 Endpoints:
   /index.html    -> 3 hits
   /dashboard     -> 2 hits
   /login         -> 1 hits
+
+Status Codes:
+  200 -> 4
+  302 -> 1
+  500 -> 1
 
 ```
 
