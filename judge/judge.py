@@ -173,9 +173,9 @@ async def main(test_cases):
 if __name__ == "__main__":
     test_cases = [
         'feat/311',
-        # 'feat/317',
-        # 'fix/359',
-        # 'feat/452'
+        'feat/317',
+        'fix/359',
+        'feat/452'
     ]
 
     ruling = asyncio.run(main(test_cases))
