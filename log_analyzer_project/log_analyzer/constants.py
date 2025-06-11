@@ -1,0 +1,2 @@
+# Format: 10/Oct/2000:13:55:36 -0700
+APACHE_LOG_TIMESTAMP_FORMAT = "%d/%b/%Y:%H:%M:%S %z"
