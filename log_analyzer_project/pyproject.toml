@@ -1,0 +1,16 @@
+[project]
+name = "log-analyzer"
+version = "0.1.0"
+description = "A CLI tool to analyze web server logs"
+authors = [{ name = "John Doe", email = "john.doe@example.com" }]
+dependencies = []
+
+[project.scripts]
+log-analyzer = "log_analyzer.main:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["log_analyzer"]
