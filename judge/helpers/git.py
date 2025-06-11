@@ -62,8 +62,13 @@ def stage_all_files() -> bool:
 
 def create_commit(message: str) -> bool:
     try:
+        status = subprocess.check_output(["git", "status", "--porcelain"], text=True)
+        if not status.strip():
+            print("No changes to commit")
+            return False
+            
         subprocess.check_output(["git", "commit", "-m", message], text=True)
         return True
     except subprocess.CalledProcessError as e:
-        print(f"Error creating a commit: {e}")
+        print(f"Error creating commit: {e}")
         return False
