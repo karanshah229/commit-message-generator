@@ -3,7 +3,7 @@ import subprocess
 import os
 
 from helpers.llm import get_mcp_client
-from helpers.git import get_branch_name, get_full_diff, get_recent_commits
+from helpers.git import create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, stage_all_files, switch_branch, unstage_all_files
 
 async def get_suggested_commit_message():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -94,6 +94,7 @@ The commit message should pass only if it passes all the judging criteria.
 
 Create another nested key for each criteria with a boolean value indicating if the commit message passes that criterion.
 If the commit message does not pass that criteria, suggest improvements in the commit message that will pass that criteria.
+Also output the thinking steps very clearly
 
 
     [Output Format Examples]
@@ -138,21 +139,33 @@ async def judge_commit_message(prompt, mcp_agent):
         max_steps=10,
     )
 
-async def main():
+async def run_test_cases(branch_name):
     mcp_agent = get_mcp_client()
 
+    switch_branch(branch_name)
+    reset_head_by_commits(1)
+    unstage_all_files()
+    
     await seed_db()
     commit_message = await get_suggested_commit_message()
-    print("\nSuggested Commit Message:")
     print(commit_message)
-    
+
     diff = get_full_diff()
     branch = get_branch_name()
     commits = get_recent_commits()
     
     prompt = get_judging_prompt(commit_message, diff, branch, commits)
+    ruling = await judge_commit_message(prompt, mcp_agent)
 
-    return await judge_commit_message(prompt, mcp_agent)
+    stage_all_files()
+    create_commit(commit_message)
+    
+    switch_branch('main')
+
+    return ruling
+
+async def main():
+    await run_test_cases('feat/log-analyzer-1')
 
 if __name__ == "__main__":
     ruling = asyncio.run(main())

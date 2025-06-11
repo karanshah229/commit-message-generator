@@ -27,3 +27,43 @@ def get_recent_commits(limit: int = 5) -> List[str]:
         return commits.strip().split("\n")
     except subprocess.CalledProcessError:
         return []
+
+def switch_branch(branch_name: str) -> bool:
+    try:
+        subprocess.check_output(["git", "switch", branch_name], text=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error switching to branch {branch_name}: {e}")
+        return False
+
+def reset_head_by_commits(num_commits: int) -> bool:
+    try:
+        subprocess.check_output(["git", "reset", "--soft", f"HEAD~{num_commits}"], text=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error resetting HEAD by {num_commits} commits: {e}")
+        return False
+
+def unstage_all_files() -> bool:
+    try:
+        subprocess.check_output(["git", "reset", "HEAD"], text=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error unstaging all files: {e}")
+        return False
+
+def stage_all_files() -> bool:
+    try:
+        subprocess.check_output(["git", "add", "."], text=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error staging all files: {e}")
+        return False
+
+def create_commit(message: str) -> bool:
+    try:
+        subprocess.check_output(["git", "commit", "-m", message], text=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error creating a commit: {e}")
+        return False
