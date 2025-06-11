@@ -25,28 +25,26 @@ fix(auth): resolve login loop issue
 chore: update dependencies
 [Examples End]
 
-You will be provided with the following information to help you generate the commit message:
-1. The full diff of the changes.
-2. The current branch name.
-3. The last few commit messages for reference.
-4. Always Use the provided Kanban server to fetch the ticket details from the branch name if ticket ID is present in the branch name.
+Generate the commit message based on the following:
+1. The message wording should be clear and concise.
+2. The message format should strictly follow the Conventional Commits specification.
+3. The message should be strictly relevant to the changes made in the code.
+4. The message should be consistent with previous commit messages in the same repository.
+5. You are also provided with a Kanban MCP server to fetch details about the ticket. Fetch the details if the branch name contains a ticket ID. But ensure that even after you fetch the details the commit message should only have details relevant to the changes made in the code. If the changes are not relevant to the ticket, do not include the ticket details in the commit message.
 
-[Tools]
-You also have a Kanban MCP server available. Explore all the tools it provides.
-You can use the Kanban MCP server to fetch details about that ticket.
+[Input]
+    [Full Diff Start]
+    {diff}
+    [Full Diff End]
 
-Here is part of the information you need to generate the commit message:
-[Full Diff Start]
-{diff}
-[Full Diff End]
+    [Branch Name Start]
+    {branch}
+    [Branch Name End]
 
-[Branch Name Start]
-{branch}
-[Branch Name End]
-
-[Recent Commits Start]
-{(chr(10) * 2).join(commits)}
-[Recent Commits End]
+    [Recent Commits Start]
+    {(chr(10) * 2).join(commits)}
+    [Recent Commits End]
+[End of Input]
 
 [Output]
 Generate a concise and clear commit message based on the above information in the format as specified above.
