@@ -8,8 +8,18 @@ async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: Li
     prompt = f"""
 [Personality]
 You are an expert software engineer.
-You have to generate a semantic commit message in Conventional Commit format.
-The commit message should be concise, clear, and follow the Conventional Commits specification.
+
+You have to generate a semantic commit message in the Conventional Commits format.
+
+The commit message must:
+1. Be concise, clear, and in plain English.
+2. Strictly follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+3. Be strictly relevant to the changes made in the code (i.e., based on the provided diff).
+4. Be stylistically and semantically consistent with recent commit messages from the same repository.
+5. Not include ticket IDs or irrelevant ticket details in the commit message.
+6. Use the Kanban MCP server to fetch ticket details if the branch name includes a ticket ID.
+   - Include ticket information in the commit message if it directly relates to the code changes.
+   - If the ticket contains broader context but is unrelated to the code change, do not include that information.
 
 [Examples Start]
 feat(api): add support for pagination
@@ -24,14 +34,6 @@ fix(auth): resolve login loop issue
 
 chore: update dependencies
 [Examples End]
-
-Generate the commit message based on the following:
-1. The message wording should be clear and concise.
-2. The message format should strictly follow the Conventional Commits specification.
-3. Do not add the ticket ID in the commit message.
-4. The message should be strictly relevant to the changes made in the code.
-5. The message should be consistent with previous commit messages in the same repository.
-6. You are also provided with a Kanban MCP server to fetch details about the ticket. Fetch the details if the branch name contains a ticket ID. But ensure that even after you fetch the details the commit message should only have details relevant to the changes made in the code. If the changes are not relevant to the ticket, do not include the ticket details in the commit message.
 
 [Input]
     [Full Diff Start]
@@ -48,9 +50,19 @@ Generate the commit message based on the following:
 [End of Input]
 
 [Output]
-Generate a concise and clear commit message based on the above information in the format as specified above.
-Do not provide any additional commentary or explanations, just the commit message.
-Do not provide the Thought or the Action taken, just the commit message.
+Your task is to output a single semantic commit message** that satisfies all the judging criteria above.
+
+Do:
+- Output only the final commit message.
+- Make sure it is aligned with the code diff and recent commits.
+- Use the appropriate `type(scope):` prefix.
+- Use a short, meaningful description.
+
+Do Not:
+- Output any additional text or explanation.
+- Include the Thought or Action taken.
+
+[End of Output]
 """
 
     # print(prompt)
