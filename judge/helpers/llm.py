@@ -12,7 +12,7 @@ VIRTUAL_KEY = os.getenv("PORTKEY_VIRTUAL_KEY")
 def get_portkey_langchain_llm():
     portkey_headers = createHeaders(api_key=PORTKEY_API_KEY, virtual_key=VIRTUAL_KEY)
 
-    return ChatOpenAI(api_key="X", base_url=PORTKEY_GATEWAY_URL, default_headers=portkey_headers, model="gpt-4o-mini", temperature=0.3)
+    return ChatOpenAI(api_key="X", base_url=PORTKEY_GATEWAY_URL, default_headers=portkey_headers, model="gpt-4o-mini", temperature=0.1)
 
 def get_mcp_client():
     llm = get_portkey_langchain_llm()

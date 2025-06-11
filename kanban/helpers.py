@@ -5,6 +5,7 @@ def fetch_ticket_details(ticket_id: int):
     conn = get_db_connection()
     ticket = conn.execute("SELECT * FROM tickets WHERE id = ?", (ticket_id,)).fetchone()
     conn.close()
+    print(f"Fetching details for ticket ID: {ticket_id}")
     if ticket:
         return dict(ticket)
     else:

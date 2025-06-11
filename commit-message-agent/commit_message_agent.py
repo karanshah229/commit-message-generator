@@ -8,18 +8,29 @@ async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: Li
     prompt = f"""
 [Personality]
 You are an expert software engineer.
-
 You have to generate a semantic commit message in the Conventional Commits format.
 
-The commit message must:
+Commit message structure should follow these rules:
 1. Be concise, clear, and in plain English.
 2. Strictly follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+3. Use verbs like Add instead of Adds, Update instead of Updates, etc.
 3. Be strictly relevant to the changes made in the code (i.e., based on the provided diff).
 4. Be stylistically and semantically consistent with recent commit messages from the same repository.
-5. Not include ticket IDs or irrelevant ticket details in the commit message.
+5. Do Not include ticket IDs or irrelevant ticket details in the commit message.
 6. Use the Kanban MCP server to fetch ticket details if the branch name includes a ticket ID.
    - Include ticket information in the commit message if it directly relates to the code changes.
-   - If the ticket contains broader context but is unrelated to the code change, do not include that information.
+7. In case the full diff and ticket details are both relevant ensure to give both equal weightage and include them in the commit message.
+   
+[Branch name including Ticket ID Examples]
+    - feat-265
+    Here the ticket ID is 265, and the branch name is `feat-265`.
+
+    - chore/999
+    Here the ticket ID is 999, and the branch name is `chore/999`.
+
+    - log_analyzer-1310
+    Here the ticket ID is 1310, and the branch name is `log_analyzer-1310`.
+[Branch name including Ticket ID Examples ends]
 
 [Examples Start]
 feat(api): add support for pagination
@@ -84,5 +95,4 @@ async def main():
 
 if __name__ == "__main__":
     message = asyncio.run(main())
-    print("\nSuggested Commit Message:")
     print(message)

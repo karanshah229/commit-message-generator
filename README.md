@@ -7,7 +7,7 @@ Build an AI Agent that automatically generates semantic commit messages in the C
 -   The diff of changes made
 -   The current Git branch name
 -   A list of recent commit messages
--   Optional ticket details fetched via a Kanban MCP server
+-   Optionally, ticket details fetched via a Kanban MCP server
 
 ### Output
 

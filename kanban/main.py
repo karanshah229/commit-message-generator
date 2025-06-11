@@ -12,6 +12,7 @@ def tool_fetch_ticket(ticket_id: int) -> Ticket:
     Args:
         ticket_id: ID of the ticket to fetch.
     """
+    print(f"Fetching details for ticket ID: {ticket_id}")
     return fetch_ticket_details(ticket_id)
 
 @mcp.tool()
