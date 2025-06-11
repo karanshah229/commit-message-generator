@@ -172,10 +172,10 @@ async def main(test_cases):
 
 if __name__ == "__main__":
     test_cases = [
-        'feat/log-analyzer-1',
-        'feat/log-analyzer-2',
-        'fix/log-analyzer-3',
-        'feat/log-analyzer-4'
+        'feat/311',
+        'feat/317',
+        'fix/359',
+        'feat/452'
     ]
 
     ruling = asyncio.run(main(test_cases))
