@@ -11,11 +11,11 @@ def is_file_ignore_by_git(filename: str) -> bool:
 def get_full_diff() -> str:
     try:
         # Get the diff of tracked files
-        tracked_diff = subprocess.check_output(["git", "diff", "../log_analyzer_project/"], text=True).strip()
+        tracked_diff = subprocess.check_output(["git", "diff", "log_analyzer_project/"], text=True).strip()
         
         # Get list of untracked files
         untracked_files = subprocess.check_output(
-            ["git", "ls-files", "--others", "--exclude-standard", "../log_analyzer_project/"],
+            ["git", "ls-files", "--others", "--exclude-standard", "log_analyzer_project/"],
             text=True
         ).strip().split("\n")
         
@@ -103,7 +103,7 @@ def unstage_all_files() -> bool:
         print(f"Error unstaging all files: {e}")
         return False
 
-def stage_and_create_commit(message: str) -> bool:
+def stage_and_create_commit(message: str = 'Default commit message') -> bool:
     try:
         status = subprocess.check_output(["git", "status", "--porcelain"], text=True)
         if not status.strip():
