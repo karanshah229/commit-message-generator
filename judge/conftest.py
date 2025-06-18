@@ -1,5 +1,5 @@
 import pytest
-import os
+from helpers.llm import run_mcp_server, kill_process
 
 # Configure pytest to handle async tests
 pytest_plugins = ('pytest_asyncio',)
@@ -7,8 +7,8 @@ pytest_plugins = ('pytest_asyncio',)
 # Add any common fixtures here if needed
 @pytest.fixture(autouse=True)
 def setup_test_environment():
-    """Setup and teardown for each test."""
     # Setup
+    process = run_mcp_server()
     yield
-    # Teardown - ensure we're back on master branch after each test
-    os.system('git checkout master')
+    # Teardown
+    kill_process(process)

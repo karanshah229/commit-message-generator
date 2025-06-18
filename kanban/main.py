@@ -35,5 +35,6 @@ def tool_update_ticket(ticket_id: int, ticket: TicketUpdate):
     return update_ticket(ticket_id, ticket.title, ticket.description, ticket.status)
 
 if __name__ == "__main__":
+    print("Starting Kanban MCP server...")
     init_db()
     mcp.run(transport='stdio')

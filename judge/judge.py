@@ -19,9 +19,8 @@ async def get_suggested_commit_message():
     return result.stdout.strip()
 
 async def seed_db():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    agent_dir = os.path.join(os.path.dirname(current_dir), 'kanban')
-    script_path = os.path.join(agent_dir, 'seed.py')
+    kanban_server_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'kanban')
+    script_path = os.path.join(kanban_server_dir, 'seed.py')
     
     result = subprocess.run(['python', script_path], 
                           capture_output=True, 
