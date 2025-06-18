@@ -16,17 +16,14 @@ def get_portkey_langchain_llm():
 
 def get_mcp_client():
     llm = get_portkey_langchain_llm()
+    current_dir = os.path.dirname(__file__)
+    kanban_server_path = os.path.join(current_dir, '..', '..', 'kanban', 'main.py')
 
     config = {
       "mcpServers": {
         "Kanban": {
-          "command": "/Users/karan/.local/bin/uv",
-          "args": [
-            "--directory",
-            "/Users/karan/hr/ai-agents/commit-message-generator/kanban",
-            "run",
-            "main.py"
-          ]
+          "command": "python3",
+          "args": [kanban_server_path]
         }
       }
     }

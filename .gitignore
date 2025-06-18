@@ -47,3 +47,5 @@ htmlcov/
 *.db
 
 log_analyzer_project/exports/
+judge/unit.xml
+unit.xml

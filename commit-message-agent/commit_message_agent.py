@@ -91,6 +91,7 @@ async def main():
     mcp_agent = get_mcp_client()
 
     message = await generate_commit_message(mcp_agent, diff, branch, commits)
+    await mcp_agent.close()
     return message
 
 if __name__ == "__main__":

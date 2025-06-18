@@ -17,6 +17,7 @@ async def test_commit_message(branch_name):
     output = await run_test_case(branch_name)
     raw_output = output['ruling']
     commit_message = output['commit_message']
+    print("RAW OUTPUT FROM JUDGE:", repr(output))
     test_case = json.loads(raw_output)
     
     # Store the results for detailed reporting
