@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from mcp_use import MCPAgent, MCPClient
 from portkey_ai import createHeaders, PORTKEY_GATEWAY_URL
 
-load_dotenv("../.env.local")
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", "..", ".env.local"))
 PORTKEY_API_KEY = os.getenv("PORTKEY_API_KEY")
 VIRTUAL_KEY = os.getenv("PORTKEY_VIRTUAL_KEY")
 
