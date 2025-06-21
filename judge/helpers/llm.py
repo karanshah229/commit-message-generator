@@ -13,7 +13,7 @@ def get_llm():
       api_key=OPENAI_API_KEY,
       temperature=0,
       model="gpt-4o",
-      max_retries=5,
+      max_retries=2,
   )
 
 def get_mcp_client():
