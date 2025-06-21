@@ -7,6 +7,7 @@ from mcp_use import MCPAgent, MCPClient
 
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", "..", ".env.local"))
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
 
 def get_llm():
     return ChatOpenAI(
@@ -14,6 +15,7 @@ def get_llm():
       temperature=0,
       model="gpt-4o",
       max_retries=2,
+      base_url=OPENAI_API_BASE
   )
 
 def get_mcp_client():
