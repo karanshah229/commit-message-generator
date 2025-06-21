@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -31,3 +32,13 @@ def get_mcp_client():
 
     client = MCPClient.from_dict(config)
     return MCPAgent(llm=llm, client=client, max_steps=2)
+
+def run_mcp_server():
+    kanban_path = os.path.join(os.path.dirname(__file__), '..', '..', 'kanban', 'main.py')
+    process = subprocess.Popen(['python3', kanban_path])
+    return process
+
+def kill_process(process):
+    if process is not None:
+        process.terminate()
+        process.wait()

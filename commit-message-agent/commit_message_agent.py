@@ -2,7 +2,7 @@ import asyncio
 from typing import List
 
 from helpers.git import get_branch_name, get_full_diff, get_recent_commits
-from helpers.llm import get_mcp_client
+from helpers.llm import get_mcp_client, kill_process, run_mcp_server
 
 async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: List[str]) -> str:
     prompt = f"""
@@ -95,5 +95,7 @@ async def main():
     return message
 
 if __name__ == "__main__":
+    process = run_mcp_server()
     message = asyncio.run(main())
     print(message)
+    kill_process(process)
