@@ -1,3 +1,5 @@
+git branch -D fix-359
+
 git checkout -b fix-359
 
 SCRIPTS_DIR=$(pwd)

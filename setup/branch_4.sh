@@ -1,3 +1,5 @@
+git branch -D feat-452
+
 git checkout -b feat-452
 
 SCRIPTS_DIR=$(pwd)

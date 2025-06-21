@@ -1,0 +1,33 @@
+version: 1.0
+configuration:
+    has_webserver: false
+    scoring:
+        command: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
+        files:
+            - unit.xml
+    ide_config:
+        default_open_files:
+            - README.md
+            - commit-message-agent/commit_message_agent.py
+            - kanban/main.py
+        project_menu:
+            install: bash setup/install.sh
+            run: bash setup/install.sh && python3 commit-message-agent/commit_message_agent.py
+            test: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
+    readonly_paths:
+        - README.md
+        - PROJECT_FILES_INSTRUCTIONS.md
+        - .env.local
+        - .env.local.example
+        - setup/*
+        - setup/**/*
+        - log_analyzer_project/*
+        - log_analyzer_project/**/*
+        - kanban/__init__.py
+        - kanban/db.py
+        - kanban/kanban.sqlite3
+        - kanban/main.py
+        - kanban/models.py
+        - kanban/README.md
+        - kanban/requirements.txt
+        - kanban/seed.py
