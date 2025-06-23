@@ -6,74 +6,97 @@ from helpers.llm import get_mcp_client, kill_process, run_mcp_server
 
 async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: List[str]) -> str:
     prompt = f"""
-[Personality]
-You are an expert software engineer.
-You have to generate a semantic commit message in the Conventional Commits format.
+### [Personality]
+You are an expert software engineer specializing in writing perfect commit messages that follow Conventional Commits standards. You analyze code changes with precision and create messages that are clear, concise, and accurately reflect the modifications made.
 
-Commit message structure should follow these rules:
-1. Be concise, clear, and in plain English.
-2. Strictly follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
-3. Use verbs like Add instead of Adds, Update instead of Updates, etc.
-3. Be strictly relevant to the changes made in the code (i.e., based on the provided diff).
-4. Be stylistically and semantically consistent with recent commit messages from the same repository.
-5. Do Not include ticket IDs or irrelevant ticket details in the commit message.
-6. Use the Kanban MCP server to fetch ticket details if the branch name includes a ticket ID.
-   - Include ticket information in the commit message if it directly relates to the code changes.
-7. In case the full diff and ticket details are both relevant ensure to give both equal weightage and include them in the commit message.
-   
-[Branch name including Ticket ID Examples]
-    - feat-265
-    Here the ticket ID is 265, and the branch name is `feat-265`.
+### [Critical Requirements]
 
-    - chore/999
-    Here the ticket ID is 999, and the branch name is `chore/999`.
+You must generate a commit message that scores 1.0 on ALL five judging criteria:
 
-    - log_analyzer-1310
-    Here the ticket ID is 1310, and the branch name is `log_analyzer-1310`.
-[Branch name including Ticket ID Examples ends]
+1. Use imperative voice ("Add", "Fix", "Remove"), avoid redundancy and vague terms
+2. Strictly Follow Conventional Commits format
+3. Message must accurately reflect the code diff
+4. Match style, tone, and structure of recent commits
+5. Use kanban ticket details from the kanban mcp only if they clarify the change
 
-[Examples Start]
-feat(api): add support for pagination
+### [Commit Message Structure]
 
-    - Enables cursor-based pagination for large datasets
-    - Adds `pageToken` and `limit` query params to endpoints
+**Rules**:
+- Title must be imperative, lowercase, under 50 characters
+- Summary must be imperative, lowercase, under 72 characters
+- Use bullet points only if they add clarity
+- Bullets must be focused and non-verbose
+- Match the formatting style of recent commits
+
+### [Ticket Integration]
+
+If branch name contains a ticket ID (e.g., `feat-123`, `fix/login-987`):
+1. Extract ticket ID from branch name
+2. Fetch ticket details using the kanban mcp server provided to you
+3. Use ticket information ONLY if it directly clarifies the code changes
+4. Do NOT include raw ticket ID or title in message
+5. Do NOT include unrelated ticket information
+
+### [Analysis Process]
+
+1. **Analyze the diff**: Identify all significant changes (additions, deletions, modifications)
+2. **Determine type**: Based on the nature of changes (new feature, bug fix, maintenance, etc.)
+3. **Identify scope**: The specific area/module being changed
+4. **Check recent commits**: Understand the style and format used in this repository
+5. **Consider ticket context**: If available and relevant, incorporate ticket details
+6. **Write summary**: Create concise, imperative description under 72 characters
+7. **Add bullets if needed**: Only if they provide essential context not covered in summary
+
+### [Examples of Perfect Commit Messages]
+
+```markdown
+feat(api): add pagination support
+
+    - Implement cursor-based pagination
+    - Add pageToken and limit parameters
 
 fix(auth): resolve login loop issue
 
-    - Fixes token expiration not redirecting to login
-    - Adds unit tests for edge-case logouts
+    - Fix token expiration handling
+    - Add edge-case test coverage
 
 chore: update dependencies
-[Examples End]
 
-[Input]
-    [Full Diff Start]
-    {diff}
-    [Full Diff End]
+refactor(parser): improve HTTP version handling
 
-    [Branch Name Start]
-    {branch}
-    [Branch Name End]
+    - Support HTTP/2 and HTTP/3 protocols
+    - Fix timezone parsing issues
+```
 
-    [Recent Commits Start]
-    {(chr(10) * 2).join(commits)}
-    [Recent Commits End]
-[End of Input]
+### [Input]
 
-[Output]
-Your task is to output a single semantic commit message** that satisfies all the judging criteria above.
+```plaintext
+[Full Diff Start]
+{diff}
+[Full Diff End]
 
-Do:
-- Output only the final commit message.
-- Make sure it is aligned with the code diff and recent commits.
-- Use the appropriate `type(scope):` prefix.
-- Use a short, meaningful description.
+[Branch Name Start]
+{branch}
+[Branch Name End]
 
-Do Not:
-- Output any additional text or explanation.
-- Include the Thought or Action taken.
+[Recent Commits Start]
+{commits}
+[Recent Commits End]
+```
 
-[End of Output]
+### [Output Instructions]
+
+Generate ONLY the commit message. Do not include any explanations, thoughts, or additional text.
+
+**Requirements**:
+- Must be under 50 characters for the title line
+- Must be under 72 characters for the summary line
+- Must use imperative voice
+- Must accurately reflect the diff
+- Must match recent commit style
+- Must use ticket details appropriately if available
+
+**Output format**: Just the commit message, nothing else.
 """
 
     # print(prompt)
