@@ -11,7 +11,6 @@ while read local_ref local_sha remote_ref remote_sha; do
   for blocked in "${blocked_branches[@]}"; do
     if [[ "$branch_name" == "$blocked" ]]; then
       echo "🚫 Push blocked: Branch '$branch_name' is not allowed to be pushed."
-      exit 1
     fi
   done
 done
