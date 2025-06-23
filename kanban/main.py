@@ -4,6 +4,7 @@ from helpers import fetch_ticket_details, create_ticket, update_ticket
 from models import Ticket, TicketCreate, TicketUpdate
 
 # Initialize the MCP server
+mcp = FastMCP("Kanban")
 
 # Expose the functions as tools to the MCP server
 
