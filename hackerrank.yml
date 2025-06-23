@@ -12,7 +12,7 @@ configuration:
             - kanban/main.py
         project_menu:
             install: bash setup/install.sh
-            run: bash setup/install.sh && python3 commit-message-agent/commit_message_agent.py
+            run: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
             test: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
     readonly_paths:
         - README.md
