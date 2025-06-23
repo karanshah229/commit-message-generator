@@ -89,6 +89,7 @@ You will evaluate a commit message using five criteria, each scored between **0.
    - Use ticket details only if they **clarify the change**
    - Do **not** include raw ticket ID or title in message
    - Do **not** include unrelated ticket information
+   - If a part of a ticket is not relevant to the changes made, that part should not be included in the commit message.
 
 ---
 
@@ -127,8 +128,10 @@ You will be provided:
 Evaluate the commit using the criteria above.  
 You **must**:
 - Score each criterion using only **0.0, 0.4, 0.7, or 1.0**
-- Justify any score below 1.0
-- Never hallucinate or assume anything not in the input
+- Don't justify a score of 1.0.
+- Justify any score below 1.0.
+- Do not give vague or generic feedback.
+- Never hallucinate or assume anything not in the inpuy
 
 ---
 
