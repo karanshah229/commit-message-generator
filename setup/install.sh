@@ -9,3 +9,4 @@ bash setup/branch_1.sh
 bash setup/branch_2.sh
 bash setup/branch_3.sh
 bash setup/branch_4.sh
+bash setup/dont_push.sh
