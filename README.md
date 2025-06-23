@@ -19,7 +19,8 @@ The generated commit messages must be:
 -   **Concise and Clear**: Easy to understand at a glance.
 -   **Formatted Correctly**: Following the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
 -   **Relevant**: The message should accurately reflect the changes in the diff.
--   **Context-Aware**: If the branch name contains a ticket ID (e.g., `feature/TICKET-123-new-auth-flow`), the agent should use this information to enrich the commit message.
+-   **Consistent with previous commits**: The message should accurately reflect the tone and style of the previous commit messages.
+-   **Context-Aware**: If the branch name contains a ticket ID (e.g., `feature/TICKET-123-new-auth-flow`), the agent should use the ticket information from the Kanban MCP server to enrich the commit message.
 
 **Example of a great commit message:**
 
@@ -42,5 +43,6 @@ Your solution will be evaluated based on the following criteria:
 
 -   **Correctness**: The agent consistently produces valid Conventional Commit messages.
 -   **Relevance**: The messages accurately describe the code changes.
+-   **Consistent with previous commits**: The messages accurately reflect the tone and style of the previous commit messages.
 -   **Tool Integration**: The agent correctly fetches and uses information from the Kanban server when a ticket ID is present in the branch name.
 -   **Code Quality**: The code is well-structured, readable, and maintainable.
