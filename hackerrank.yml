@@ -26,7 +26,6 @@ configuration:
         - kanban/__init__.py
         - kanban/db.py
         - kanban/kanban.sqlite3
-        - kanban/main.py
         - kanban/models.py
         - kanban/README.md
         - kanban/requirements.txt

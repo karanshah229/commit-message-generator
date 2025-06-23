@@ -1,7 +1,5 @@
 # AI Agent: Automatic Commit Message Generator
 
-## The Challenge
-
 You need to create an AI agent that analyzes code changes and suggests a commit message in the Conventional Commit format.
 
 ### Inputs
@@ -31,13 +29,13 @@ feat(api): add support for pagination
 -   Adds `pageToken` and `limit` query params to endpoints
 ```
 
-## Tools at Your Disposal
+### Tools at Your Disposal
 
 We have provided a Kanban MCP server that is already integrated into your project.
 You can use it to fetch details about tickets, which can provide valuable context for your commit messages.
 The code to create the tools for the kanban MCP server are not written and you have to write those.
 
-## Evaluation
+### Evaluation
 
 Your solution will be evaluated based on the following criteria:
 
