@@ -144,3 +144,23 @@ def get_latest_commit_message() -> str:
     except subprocess.CalledProcessError as e:
         print(f"Error getting latest commit message: {e}")
         return ""
+
+def delete_local_branch(branch_name: str, force: bool = True) -> bool:
+    try:
+        cmd = ["git", "branch", "-d" if not force else "-D", branch_name]
+        subprocess.check_output(cmd, text=True)
+        return True
+    except subprocess.CalledProcessError:
+        # Fail silently if branch deletion fails
+        return False
+
+def delete_remote_branch(branch_name: str, remote: str = "origin", force: bool = True) -> bool:
+    try:
+        cmd = ["git", "push", remote, f":{branch_name}"]
+        if force:
+            cmd.insert(2, "--force")
+        subprocess.check_output(cmd, text=True)
+        return True
+    except subprocess.CalledProcessError:
+        # Fail silently if remote branch deletion fails
+        return False

@@ -3,7 +3,6 @@ import json
 import re
 from judge import run_test_case
 
-# Test cases to run
 TEST_CASES = [
     'feat-311',
     'feat-317',
@@ -22,7 +21,6 @@ def extract_json_from_response(response):
 async def test_commit_message(branch_name):
     """Test that commit messages meet the judging criteria."""
     output = await run_test_case(branch_name)
-    # print("RAW OUTPUT FROM JUDGE:", repr(output))
     raw_output = output['ruling']
     commit_message = output['commit_message']
     json_output = extract_json_from_response(raw_output)

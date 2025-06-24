@@ -1,4 +1,4 @@
-git branch -D fix-359
+git branch -D fix-359 || true
 git checkout -b fix-359
 
 SCRIPTS_DIR=$(pwd)
@@ -74,5 +74,4 @@ fix: Log parser logic
 - Parse different timezone formats in the log
 EOF
 
-git push -d origin fix-359 || true
 git push -u origin fix-359 -f

@@ -1,4 +1,4 @@
-git branch -D feat-311
+git branch -D feat-311 || true
 git checkout -b feat-311
 
 SCRIPTS_DIR=$(pwd)
@@ -172,5 +172,4 @@ feat: Create log analyzer project
 - Application that analyzes apache web server logs and generates the most requested endpoints
 EOF
 
-git push -d origin feat-311 || true
 git push -u origin feat-311 -f
