@@ -16,6 +16,7 @@ def setup_test_environment():
     kill_process(mcp_server_process)
 
     # Clean up test branches after each test
+    print("Cleanup branches---------------------------")
     for branch_name in TEST_CASES:
         delete_local_branch(branch_name, force=True)
         delete_remote_branch(branch_name, force=True)
