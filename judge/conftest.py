@@ -7,7 +7,7 @@ from helpers.git import delete_local_branch, delete_remote_branch
 pytest_plugins = ('pytest_asyncio',)
 
 # Add any common fixtures here if needed
-@pytest.fixture(autouse=True)
+@pytest.fixture(scope="session")
 def setup_test_environment():
     # Setup
     mcp_server_process = run_mcp_server()
