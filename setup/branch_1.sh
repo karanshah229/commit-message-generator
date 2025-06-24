@@ -172,3 +172,5 @@ feat: Create log analyzer project
 - Initial commit of log analyzer project
 - Application that analyzes apache web server logs and generates the most requested endpoints
 EOF
+
+git push -u origin feat-311 -f
