@@ -1,5 +1,4 @@
 git branch -D feat-317
-
 git checkout -b feat-317
 
 SCRIPTS_DIR=$(pwd)
@@ -137,4 +136,5 @@ feat: Add status code distribution feature
 - Report module updated to print the status code distribution.
 EOF
 
-git push -u origin feat-317 -f
+git push -d origin feat-317
+git push -u origin feat-317

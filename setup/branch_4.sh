@@ -1,5 +1,4 @@
 git branch -D feat-452
-
 git checkout -b feat-452
 
 SCRIPTS_DIR=$(pwd)
@@ -488,6 +487,7 @@ feat: Add more features to log analyzer project
 - Export results to JSON or CSV
 EOF
 
-git push -u origin feat-452 -f
+git push -d origin feat-452
+git push -u origin feat-452
 
 git switch master
