@@ -173,4 +173,4 @@ feat: Create log analyzer project
 EOF
 
 git push -d origin feat-311 || true
-git push -u origin feat-311 - f
+git push -u origin feat-311 -f
