@@ -487,7 +487,7 @@ feat: Add more features to log analyzer project
 - Export results to JSON or CSV
 EOF
 
-git push -d origin feat-452
-git push -u origin feat-452
+git push -d origin feat-452 || true
+git push -u origin feat-452 -f
 
 git switch master

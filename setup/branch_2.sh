@@ -136,5 +136,5 @@ feat: Add status code distribution feature
 - Report module updated to print the status code distribution.
 EOF
 
-git push -d origin feat-317
-git push -u origin feat-317
+git push -d origin feat-317 || true
+git push -u origin feat-317 -f

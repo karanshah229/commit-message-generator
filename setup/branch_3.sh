@@ -74,5 +74,5 @@ fix: Log parser logic
 - Parse different timezone formats in the log
 EOF
 
-git push -d origin fix-359
-git push -u origin fix-359
+git push -d origin fix-359 || true
+git push -u origin fix-359 -f
