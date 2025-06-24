@@ -2,7 +2,7 @@ import subprocess
 import os
 
 from helpers.llm import get_mcp_client
-from helpers.git import get_latest_commit_message, stage_and_create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, switch_branch, unstage_all_files
+from helpers.git import delete_local_branch, delete_remote_branch, get_latest_commit_message, stage_and_create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, switch_branch, unstage_all_files
 
 async def get_suggested_commit_message():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -208,6 +208,8 @@ async def run_test_case(branch_name):
 
     stage_and_create_commit(original_commit_message)
     switch_branch('master')
+    delete_local_branch(branch_name)
+    delete_remote_branch(branch_name)
 
     await mcp_agent.close()
 
