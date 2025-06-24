@@ -12,6 +12,7 @@ def setup_test_environment():
     # Setup
     mcp_server_process = run_mcp_server()
     yield
+    print("Teardown")
     # Teardown
     kill_process(mcp_server_process)
 
