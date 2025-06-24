@@ -18,7 +18,7 @@ def extract_json_from_response(response):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("branch_name", TEST_CASES)
-async def test_commit_message(branch_name):
+async def test_commit_message(branch_name, setup_test_environment):
     """Test that commit messages meet the judging criteria."""
     output = await run_test_case(branch_name)
     raw_output = output['ruling']
