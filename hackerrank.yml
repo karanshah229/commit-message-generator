@@ -2,7 +2,7 @@ version: 1.0
 configuration:
     has_webserver: false
     scoring:
-        command: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
+        command: bash setup/install.sh && python3 -m pytest judge/ -v --junit-xml=unit.xml
         files:
             - unit.xml
     ide_config:
@@ -12,8 +12,8 @@ configuration:
             - kanban/main.py
         project_menu:
             install: bash setup/install.sh
-            run: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
-            test: bash setup/install.sh && python3 -m pytest judge/ --junit-xml=unit.xml
+            run: bash setup/install.sh && python3 -m pytest judge/ -v --junit-xml=unit.xml
+            test: bash setup/install.sh && python3 -m pytest judge/ -v --junit-xml=unit.xml
     readonly_paths:
         - README.md
         - PROJECT_FILES_INSTRUCTIONS.md
