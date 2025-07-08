@@ -1,6 +1,6 @@
-# AI Agent: Automatic Commit Message Generator
+# Automatic Commit Message Generator
 
-You need to create an AI agent that analyzes code changes and suggests a commit message in the Conventional Commit format.
+You need to create an AI agent that analyzes code changes and suggests a commit message in [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ### Inputs
 
@@ -9,6 +9,10 @@ Your agent will have access to:
 -   The `diff` of staged changes.
 -   The current Git `branch name`.
 -   A list of recent commit messages from the repository.
+-   Tools at Your Disposal
+    -   We have provided a Kanban MCP server that is already integrated into your project.
+    -   You can use it to fetch details about tickets, which can provide valuable context for your commit messages.
+    -   The code to create the tools for the kanban MCP server are not written and you have to write those.
 
 ### Output Requirements
 
@@ -20,7 +24,7 @@ The generated commit messages must be:
 -   **Consistent with previous commits**: The message should accurately reflect the tone and style of the previous commit messages.
 -   **Context-Aware**: If the branch name contains a ticket ID (e.g., `feature/TICKET-123-new-auth-flow`), the agent should use the ticket information from the Kanban MCP server to enrich the commit message.
 
-**Example of a great commit message:**
+**Example of a good commit message:**
 
 ```markdown
 feat(api): add support for pagination
@@ -28,12 +32,6 @@ feat(api): add support for pagination
 -   Enables cursor-based pagination for large datasets
 -   Adds `pageToken` and `limit` query params to endpoints
 ```
-
-### Tools at Your Disposal
-
-We have provided a Kanban MCP server that is already integrated into your project.
-You can use it to fetch details about tickets, which can provide valuable context for your commit messages.
-The code to create the tools for the kanban MCP server are not written and you have to write those.
 
 ### Evaluation
 

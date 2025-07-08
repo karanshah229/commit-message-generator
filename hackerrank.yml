@@ -30,3 +30,4 @@ configuration:
         - kanban/requirements.txt
         - kanban/seed.py
         - commit-message-agent/helpers/*
+        - commit-message-agent/helpers/**/*
