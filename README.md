@@ -1,30 +1,37 @@
 # Automatic Commit Message Generator
 
-You need to create an AI agent that analyzes code changes and suggests a commit message in [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
+## What You'll Build
 
-### Inputs
+Your AI agent will analyze code changes and generate commit messages following the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
+
+## Inputs
 
 Your agent will have access to:
 
--   The `diff` of staged changes.
--   The current Git `branch name`.
--   A list of recent commit messages from the repository.
--   Tools at Your Disposal
-    -   We have provided a Kanban MCP server that is already integrated into your project.
-    -   You can use it to fetch details about tickets, which can provide valuable context for your commit messages.
-    -   The code to create the tools for the kanban MCP server are not written and you have to write those.
+-   **Git diff**: The staged changes in your repository
+-   **Branch name**: The current Git branch you're working on
+-   **Recent commits**: A list of previous commit messages for context
+-   **Kanban integration**: A pre-configured MCP server to fetch ticket details
 
-### Output Requirements
+## Tools You Can Use
 
-The generated commit messages must be:
+-   **Kanban MCP Server**: Already integrated into your project. You can fetch the ticket details using the tools provided by this server.
 
--   **Concise and Clear**: Easy to understand at a glance.
--   **Formatted Correctly**: Following the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
--   **Relevant**: The message should accurately reflect the changes in the diff.
--   **Consistent with previous commits**: The message should accurately reflect the tone and style of the previous commit messages.
--   **Context-Aware**: If the branch name contains a ticket ID (e.g., `feature/TICKET-123-new-auth-flow`), the agent should use the ticket information from the Kanban MCP server to enrich the commit message.
+> Note: You need to write the code that exposes the tools from the MCP server. See kanban/main.py
 
-**Example of a good commit message:**
+## Requirements
+
+Your generated commit messages must be:
+
+-   **Concise and Clear**: Easy to understand at a glance
+-   **Correctly Formatted**: Follow the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/)
+-   **Accurate**: Reflect the actual changes in your code
+-   **Consistent**: Match the tone and style of previous commits
+-   **Context-Aware**: Use ticket information when available (e.g., from branch names like `feature/TICKET-123-new-auth-flow`)
+
+## Example
+
+Here's what a good commit message looks like:
 
 ```markdown
 feat(api): add support for pagination
@@ -33,12 +40,12 @@ feat(api): add support for pagination
 -   Adds `pageToken` and `limit` query params to endpoints
 ```
 
-### Evaluation
+## Evaluation Criteria
 
-Your solution will be evaluated based on the following criteria:
+Your solution will be evaluated on:
 
--   **Correctness**: The agent consistently produces valid Conventional Commit messages.
--   **Relevance**: The messages accurately describe the code changes.
--   **Consistent with previous commits**: The messages accurately reflect the tone and style of the previous commit messages.
--   **Tool Integration**: The agent correctly fetches and uses information from the Kanban server when a ticket ID is present in the branch name.
--   **Code Quality**: The code is well-structured, readable, and maintainable.
+-   **Correctness**: Produces valid Conventional Commit messages
+-   **Relevance**: Messages accurately describe the code changes
+-   **Consistency**: Matches the style of previous commits
+-   **Tool Integration**: Properly uses Kanban server when ticket IDs are present
+-   **Code Quality**: Well-structured, readable, and maintainable code
