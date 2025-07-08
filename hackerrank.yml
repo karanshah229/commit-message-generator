@@ -29,3 +29,4 @@ configuration:
         - kanban/README.md
         - kanban/requirements.txt
         - kanban/seed.py
+        - commit-message-agent/helpers/*
