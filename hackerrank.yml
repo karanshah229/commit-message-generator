@@ -7,7 +7,6 @@ configuration:
             - unit.xml
     ide_config:
         default_open_files:
-            - README.md
             - commit-message-agent/commit_message_agent.py
             - kanban/main.py
         project_menu:
