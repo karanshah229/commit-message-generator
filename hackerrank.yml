@@ -7,7 +7,7 @@ configuration:
             - unit.xml
     ide_config:
         default_open_files:
-            - commit-message-agent/commit_message_agent.py
+            - commit-message-agent/user_prompt.txt
             - kanban/main.py
         project_menu:
             install: bash setup/install.sh

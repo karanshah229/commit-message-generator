@@ -1,0 +1,4 @@
+<YOUR PROMPT GOES HERE>
+# Insert {git_diff} in the prompt to replace it with the full git diff
+# Insert {branch_name} in the prompt to replace it with the branch_name
+# Insert {recent_commits} in the prompt to replace it with the recent commits in the repo

@@ -19,6 +19,11 @@ Your agent will have access to:
 
 > Note: You need to write the code that exposes the tools from the MCP server. See kanban/main.py
 
+## Placeholder
+
+Insert the token `{git_diff}` anywhere in `user_prompt.txt` - the grading harness will replace it with the actual git diff.
+Same goes for `{branch_name}` and `{recent_commits}`
+
 ## Requirements
 
 Your generated commit messages must be:

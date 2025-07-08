@@ -7,13 +7,13 @@ from helpers.llm import get_mcp_client, kill_process, run_mcp_server
 
 def load_prompt() -> str:
     """Load the prompt from the prompt.txt file."""
-    prompt_path = os.path.join(os.path.dirname(__file__), 'prompt.txt')
+    prompt_path = os.path.join(os.path.dirname(__file__), 'user_prompt.txt')
     with open(prompt_path, 'r') as f:
         return f.read().strip()
 
-async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: List[str]) -> str:
+async def generate_commit_message(mcp_agent, git_diff: str, branch_name: str, recent_commits: List[str]) -> str:
     prompt_template = load_prompt()
-    prompt = prompt_template.format(diff=diff, branch=branch, commits=commits)
+    prompt = prompt_template.format(git_diff=git_diff, branch_name=branch_name, recent_commits=recent_commits)
 
     response = await mcp_agent.run(
         prompt,
@@ -23,12 +23,12 @@ async def generate_commit_message(mcp_agent, diff: str, branch: str, commits: Li
     return response
 
 async def main():
-    diff = get_full_diff()
-    branch = get_branch_name()
-    commits = get_recent_commits()
+    git_diff = get_full_diff()
+    branch_name = get_branch_name()
+    recent_commits = get_recent_commits()
     mcp_agent = get_mcp_client()
 
-    message = await generate_commit_message(mcp_agent, diff, branch, commits)
+    message = await generate_commit_message(mcp_agent, git_diff, branch_name, recent_commits)
     await mcp_agent.close()
     return message
 
