@@ -1,0 +1,13 @@
+diff --git a/log_analyzer_project/log_analyzer/log_parser.py b/log_analyzer_project/log_analyzer/log_parser.py
+index b02cb05..3bcf09a 100644
+--- a/log_analyzer_project/log_analyzer/log_parser.py
++++ b/log_analyzer_project/log_analyzer/log_parser.py
+@@ -2,7 +2,7 @@ import re
+ from datetime import datetime
+ 
+ LOG_PATTERN = re.compile(
+-    r"(?P<ip>\S+) - - \[(?P<timestamp>[^\]]+)\] \"(?P<method>\S+) (?P<endpoint>\S+) HTTP/1.1\" (?P<status>\d{3}) (?P<size>\d+)"
++    r"(?P<ip>\S+) - - \[(?P<timestamp>[^\]]+)\] \"(?P<method>\S+) (?P<endpoint>\S+) \S+\" (?P<status>\d{3}) (?P<size>\d+)"
+ )
+ 
+ def parse_line(line):

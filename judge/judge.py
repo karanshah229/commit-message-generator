@@ -2,14 +2,14 @@ import subprocess
 import os
 
 from helpers.llm import get_mcp_client
-from helpers.git import delete_local_branch, delete_remote_branch, get_latest_commit_message, stage_and_create_commit, get_branch_name, get_full_diff, get_recent_commits, reset_head_by_commits, switch_branch, unstage_all_files
+from helpers.git import get_full_diff, get_recent_commits
 
-async def get_suggested_commit_message():
+async def get_suggested_commit_message(branch_name):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     agent_dir = os.path.join(os.path.dirname(current_dir), 'commit-message-agent')
     script_path = os.path.join(agent_dir, 'commit_message_agent.py')
     
-    result = subprocess.run(['python', script_path], 
+    result = subprocess.run(['python', script_path, branch_name], 
                           capture_output=True, 
                           text=True)
     
@@ -31,7 +31,7 @@ async def seed_db():
     
     return result.stdout.strip()
 
-def get_judging_prompt(commit_message="", diff="", branch="", commits=[]):
+def get_judging_prompt(commit_message="", git_diff="", branch_name="", recent_commits=[]):
     prompt = f"""
 ### [Personality]
 You are a deterministic judge responsible for scoring AI-generated commit messages based on strict, verifiable criteria. You always justify your scores with grounded evidence from the input. You never speculate, assume, or tolerate ambiguity.
@@ -143,15 +143,15 @@ You **must**:
 [Commit Message End]
 
 [Full Diff Start]
-{diff}
+{git_diff}
 [Full Diff End]
 
 [Branch Name Start]
-{branch}
+{branch_name}
 [Branch Name End]
 
 [Recent Commits Start]
-{commits}
+{recent_commits}
 [Recent Commits End]
 ```
 
@@ -190,26 +190,15 @@ async def judge_commit_message(prompt, mcp_agent):
 
 async def run_test_case(branch_name):
     mcp_agent = get_mcp_client()
-
-    switch_branch(branch_name)
-    original_commit_message = get_latest_commit_message()
-    reset_head_by_commits(1)
-    unstage_all_files()
     
     await seed_db()
-    commit_message = await get_suggested_commit_message()
+    commit_message = await get_suggested_commit_message(branch_name)
 
-    diff = get_full_diff()
-    branch = get_branch_name()
-    commits = get_recent_commits()
+    git_diff = get_full_diff(branch_name)
+    recent_commits = get_recent_commits()
     
-    prompt = get_judging_prompt(commit_message, diff, branch, commits)
+    prompt = get_judging_prompt(commit_message, git_diff, branch_name, recent_commits)
     ruling = await judge_commit_message(prompt, mcp_agent)
-
-    stage_and_create_commit(original_commit_message)
-    switch_branch('master')
-    delete_local_branch(branch_name)
-    delete_remote_branch(branch_name)
 
     await mcp_agent.close()
 

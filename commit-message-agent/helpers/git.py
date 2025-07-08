@@ -1,50 +1,18 @@
 import os
-import subprocess
 from typing import List
 
-def is_file_ignore_by_git(filename: str) -> bool:
-    try:
-        subprocess.check_output(["git", "check-ignore", filename], text=True)
-        return True
-    except subprocess.CalledProcessError:
-        return False
-
-def get_full_diff() -> str:
+def get_full_diff(branch_name) -> str:
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    log_analyzer_project_path = os.path.join(script_dir, '..', '..', 'log_analyzer_project')
-
-    try:
-        # Get the diff of tracked files
-        tracked_diff = subprocess.check_output(["git", "diff", log_analyzer_project_path], text=True).strip()
-        
-        # Get list of untracked files
-        untracked_files = subprocess.check_output(
-            ["git", "ls-files", "--others", "--exclude-standard", log_analyzer_project_path],
-            text=True
-        ).strip().split("\n")
-        
-        # Get content of untracked files
-        untracked_diff = ""
-        for file in untracked_files:
-            if file:  # Skip empty lines
-                try:
-                    with open(file, 'r') as f:
-                        content = f.read()
-                        untracked_diff += f"\n\n--- /dev/null\n+++ {file}\n@@ -0,0 +1 @@\n+{content}"
-                except Exception as e:
-                    untracked_diff += f"\n\nError reading untracked file {file}: {e}"
-        
-        return tracked_diff + untracked_diff
+    setup_dir = os.path.join(script_dir, '..', '..', 'setup')
+    file_path = os.path.join(setup_dir, f'{branch_name}.txt')
     
-    except subprocess.CalledProcessError as e:
-        return f"Error getting full diff: {e}"
-
-def get_branch_name() -> str:
     try:
-        branch_name = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True)
-        return branch_name.strip()
-    except subprocess.CalledProcessError:
-        return ""
+        with open(file_path, 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return f"Error: File {file_path} not found"
+    except Exception as e:
+        return f"Error reading file {file_path}: {e}"
 
 def get_recent_commits() -> List[str]:
     return """[Example 1 starts]

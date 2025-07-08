@@ -1,8 +1,9 @@
+import os
+import sys
 import asyncio
 from typing import List
-import os
 
-from helpers.git import get_branch_name, get_full_diff, get_recent_commits
+from helpers.git import get_full_diff, get_recent_commits
 from helpers.llm import get_mcp_client, kill_process, run_mcp_server
 
 def load_prompt() -> str:
@@ -22,9 +23,8 @@ async def generate_commit_message(mcp_agent, git_diff: str, branch_name: str, re
 
     return response
 
-async def main():
-    git_diff = get_full_diff()
-    branch_name = get_branch_name()
+async def main(branch_name: str) -> str:
+    git_diff = get_full_diff(branch_name)
     recent_commits = get_recent_commits()
     mcp_agent = get_mcp_client()
 
@@ -33,7 +33,12 @@ async def main():
     return message
 
 if __name__ == "__main__":
-    process = run_mcp_server()
-    message = asyncio.run(main())
-    print(message)
-    kill_process(process)
+    if len(sys.argv) > 1:
+        branch_name = sys.argv[1]
+        process = run_mcp_server()
+        message = asyncio.run(main(branch_name))
+        print(message)
+        kill_process(process)
+    else:
+        print("Usage: python commit_message_agent.py <branch_name>")
+        sys.exit(1)

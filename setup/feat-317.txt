@@ -1,0 +1,89 @@
+diff --git a/log_analyzer_project/README.md b/log_analyzer_project/README.md
+index a0bfc30..2827918 100644
+--- a/log_analyzer_project/README.md
++++ b/log_analyzer_project/README.md
+@@ -9,6 +9,7 @@ Useful for quickly extracting insights like the most requested endpoints, status
+ 
+ -   Parse standard Apache access log files
+ -   Count most requested endpoints
++-   Analyze status code distribution (2xx, 3xx, 4xx, 5xx)
+ -   Easily extensible as a Python module
+ 
+ ---
+@@ -43,11 +44,16 @@ Example
+ #### Sample Output
+ 
+ ```
+-Most Requested Endpoints:
++Top 10 Endpoints:
+   /index.html    -> 3 hits
+   /dashboard     -> 2 hits
+   /login         -> 1 hits
+ 
++Status Codes:
++  200 -> 4
++  302 -> 1
++  500 -> 1
++
+ ```
+ 
+ ### 4. Project Structure
+@@ -59,4 +65,3 @@ log_analyzer/
+ ├── report.py          # Pretty-prints the results
+ ├── main.py            # CLI entry point
+ ```
+-
+diff --git a/log_analyzer_project/log_analyzer/analyzer.py b/log_analyzer_project/log_analyzer/analyzer.py
+index c70da6a..c50dd60 100644
+--- a/log_analyzer_project/log_analyzer/analyzer.py
++++ b/log_analyzer_project/log_analyzer/analyzer.py
+@@ -1,6 +1,11 @@
++
+ from collections import Counter
+ 
+ def most_requested_endpoints(logs, top_n=5):
+     endpoints = Counter(log["endpoint"] for log in logs)
+     return endpoints.most_common(top_n)
+ 
++def status_code_distribution(logs):
++    codes = Counter(log["status"] for log in logs)
++    return dict(codes)
++
+diff --git a/log_analyzer_project/log_analyzer/main.py b/log_analyzer_project/log_analyzer/main.py
+index 8d75797..b152727 100644
+--- a/log_analyzer_project/log_analyzer/main.py
++++ b/log_analyzer_project/log_analyzer/main.py
+@@ -1,7 +1,7 @@
+ import sys
+ from log_analyzer.log_parser import read_log_file
+-from log_analyzer.analyzer import most_requested_endpoints
+-from log_analyzer.report import print_endpoint_stats
++from log_analyzer.analyzer import most_requested_endpoints, status_code_distribution
++from log_analyzer.report import print_endpoint_stats, print_status_codes
+ 
+ def main():
+     import sys
+@@ -13,8 +13,10 @@ def main():
+     logs = list(read_log_file(log_file_path))
+ 
+     endpoint_stats = most_requested_endpoints(logs)
++    status_codes = status_code_distribution(logs)
+ 
+     print_endpoint_stats(endpoint_stats)
++    print_status_codes(status_codes)
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/log_analyzer_project/log_analyzer/report.py b/log_analyzer_project/log_analyzer/report.py
+index dfb58ae..f658ed7 100644
+--- a/log_analyzer_project/log_analyzer/report.py
++++ b/log_analyzer_project/log_analyzer/report.py
+@@ -3,3 +3,8 @@ def print_endpoint_stats(stats):
+     for endpoint, count in stats:
+         print(f"{endpoint}: {count} requests")
+ 
++def print_status_codes(stats):
++    print("\nStatus Code Distribution:")
++    for code, count in stats.items():
++        print(f"{code}: {count}")
++
