@@ -8,9 +8,7 @@ pytest_plugins = ('pytest_asyncio',)
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_environment():
     # Setup
-    print("Setup")
     mcp_server_process = run_mcp_server()
     yield
-    print("Teardown")
     # Teardown
     kill_process(mcp_server_process)
