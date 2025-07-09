@@ -75,9 +75,9 @@ Add a feature to Analyze the status code distribution (2xx, 3xx, 4xx, 5xx).
                 ),
                 (
                     452,
-                    "Add support for advanced traffic filtering and export",
+                    "Add support for advanced traffic filtering",
                     """**Task:**  
-Add support for analyzing hourly traffic trends, filtering logs by time range, displaying only error responses, and exporting results.
+Add support for analyzing hourly traffic trends, filtering logs by time range, displaying only error responses.
 
 **Features:**
 - Show hourly traffic trends:
@@ -88,14 +88,10 @@ Add support for analyzing hourly traffic trends, filtering logs by time range, d
   - Exclude logs outside range
 - Show only error responses:
   - Filter logs to include only 4xx and 5xx responses
-- Export results:
-  - Allow export to JSON or CSV formats
-  - User can choose output format via CLI flag
 
 **Acceptance Criteria:**  
 - Hourly trends are displayed correctly
 - Filters for time range and error responses work independently and together
-- JSON and CSV exports include filtered results in correct format
 """,
     "todo",
 ),
