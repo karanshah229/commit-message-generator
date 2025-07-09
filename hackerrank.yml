@@ -7,8 +7,8 @@ configuration:
             - unit.xml
     ide_config:
         default_open_files:
-            - commit-message-agent/user_prompt.txt
             - kanban/main.py
+            - commit-message-agent/user_prompt.txt
         project_menu:
             install: bash setup/install.sh
             run: bash setup/install.sh && python3 -m pytest judge/ -v --junit-xml=unit.xml -n auto
